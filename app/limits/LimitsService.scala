@@ -35,6 +35,8 @@ class LimitsService @Inject()(implicit system: ActorSystem,
 
   val fixedColumnsWidths = configuration.get[Seq[Int]]("formats.fixed.columnsWidths")
 
+  val headings = configuration.get[Seq[String]]("formats.headings").toList
+
   def dataSource(charset: String, contentType: String) = {
     def splitter(s: String) = contentType match {
       case "text/csv" =>
@@ -42,14 +44,14 @@ class LimitsService @Inject()(implicit system: ActorSystem,
         s.split(csvRegex).toSeq
       case _ =>
         @tailrec
-        def chopper(s: String, size: Seq[Int], acc: Seq[String] = Seq.empty): Seq[String] = {
+        def slicer(s: String, size: Seq[Int], acc: Seq[String] = Seq.empty): Seq[String] = {
           if(s.length > size.head) {
-            chopper(s.drop(size.head), size.drop(1), acc :+ s.take(size.head))
+            slicer(s.drop(size.head), size.drop(1), acc :+ s.take(size.head))
           } else {
             acc :+ s
           }
         }
-        chopper(s,fixedColumnsWidths)
+        slicer(s,fixedColumnsWidths)
     }
 
     val rowSplitter = Flow[ByteString]

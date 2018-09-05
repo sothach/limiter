@@ -22,19 +22,18 @@ class ApiController @Inject()(limitsService: LimitsService,
     Future.successful(Ok)
   }
 
-  private val headings = List("Name","Address","Postcode","Phone","Limit","Date of birth")
   def limits(apiKey: ApiKey) = Action.async(fromFile) { request =>
     apiKey match {
       case key if key == expectKey =>
         limitsService.renderFromSource(request.body) map {
           case response if response.exists(_.isRight) =>
             val limits = response.filter(_.isRight).map(_.right.get)
-            Ok(views.html.results(headings,limits))
+            Ok(views.html.results(limitsService.headings,limits))
           case response: Seq[Either[String, _]] if response.exists(_.isLeft) =>
             val errors = response.filter(_.isLeft).map(_.left.get).mkString(";")
             logger.debug(s"Upload errors: $errors")
             BadRequest(errors)
-          case response =>
+          case _ =>
             BadRequest
         }
       case _ =>
