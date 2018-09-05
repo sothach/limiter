@@ -1,0 +1,23 @@
+@import limits.model.CreditLimit
+@(headings: List[String], limits: Seq[CreditLimit])
+
+<html>
+    <h1>Credit Limits</h1>
+    <table id="limits">
+        <tr>
+            @for(hdr <- headings) {
+                <th>@hdr</th>
+            }
+        </tr>
+        @for(limit <- limits) {
+            <tr>
+                <td>@limit.name</td>
+                <td>@limit.address</td>
+                <td>@limit.postcode</td>
+                <td>@limit.phone</td>
+                <td>@limit.limit</td>
+                <td>@limit.dateOfBirth</td>
+            </tr>
+        }
+    </table>
+</html>

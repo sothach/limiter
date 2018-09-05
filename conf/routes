@@ -1,0 +1,3 @@
+
+GET    /                controllers.ApiController.index
+POST   /api/limits      controllers.ApiController.limits(apiKey: common.model.ApiKey)
