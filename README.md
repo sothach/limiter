@@ -41,10 +41,10 @@ creating the domain objects.
 
 This service also runs within its own `ExecutionContext`, not to interfere with the controller's pool (which
 could potentially impact API request handling).  The stream supervisor declutters exception processing, allowing
-the processing stages to be written to do just there own work.  
+the processing stages to be written to do just their own work.  
 
 In future evolutions, streams also simplifies managing the concurrency aspect of processing, allowing the maximum
-number of parallel work-streams to be specified and enforced.
+number of parallel work-streams to be specified and enforced, and back-pressure to be applied to sources.
 
 A `dataSource` is made available to the controller's body parser, to render incoming data (CSV or fixed-format) into
 a canonical key/value map, to allow down-stream processing to remain ingorant of the original format.  It does this
@@ -53,10 +53,10 @@ that divides the line baxed on the configured column size (fixed-format).
 #### Domain Model
 Although domain information for this project was trivial, a couple of domain classes were defined, as a logical
 place to enforce domain rules.  `CreditLimit` is the prime domain concept, representing the line items in the 
-limits files, supported by `java.time.LocalDate` and `PhoneNumber`
+limits files, supported by `java.time.LocalDate`, `BigDecimal` and `PhoneNumber`
 #### Security
-* Given the proof-of-concept status of the project, authorization with a simple api key is deemed sufficient, rather than a more flexible,
-OAuth style solution
+* Given the proof-of-concept status of the project, authorization/authentication with a simple api key is deemed 
+sufficient, rather than a more flexible, OAuth style solution
 * As the service is only intended for local deployment, CSRF filters were disabled
 * In production, should be made available over HTTPS for privacy / integrity of communications.  HTTP was 
 considered adequate fot the proof-of-concept nature of the mission
