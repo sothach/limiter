@@ -92,11 +92,17 @@ Run the server on the local system, available at [http://localhost:9000](http://
 
 ## Sample usage
 ### POST limits upload request
-Use `curl` to post an upload request
+Use `curl` to post an upload request (CSV)
 ```shell
 curl -i -H "Content-Type: text/csv;charset=UTF-8" -X POST \
- 'http://localhost:9000/api/limits?apiKey=eabb12404d141ed6e8ee2193688178cb&mode=csv' \
+ http://localhost:9000/api/limits?apiKey=eabb12404d141ed6e8ee2193688178cb \
  --upload-file Workbook2.csv
+```
+Post an upload request (fixed-formay)
+```shell
+curl -i -H "Content-Type: text/plain;charset=UTF-8" -X POST \
+ http://localhost:9000/api/limits?apiKey=eabb12404d141ed6e8ee2193688178cb \
+ --upload-file Workbook2.prn
 ```
 
 ## Testing
