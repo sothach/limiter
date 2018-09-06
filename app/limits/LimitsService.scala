@@ -9,7 +9,6 @@ import akka.stream.{ActorMaterializer, ActorMaterializerSettings, Supervision}
 import akka.util.{ByteString, Timeout}
 import javax.inject.{Inject, Singleton}
 import limits.model._
-import play.api.i18n.MessagesApi
 import play.api.libs.streams.Accumulator
 import play.api.{Configuration, Environment, Logger}
 
@@ -17,7 +16,6 @@ import scala.annotation.tailrec
 
 @Singleton
 class LimitsService @Inject()(implicit system: ActorSystem,
-                              messagesApi: MessagesApi,
                               configuration: Configuration,
                               environment: Environment) {
 
