@@ -10,7 +10,8 @@ import scala.concurrent.Future
 
 @Singleton
 class ApiController @Inject()(limitsService: LimitsService,
-                              components: ControllerComponents) extends AbstractController(components) {
+                              components: ControllerComponents) 
+                                extends AbstractController(components) {
 
   implicit val ec = components.executionContext
   val logger = Logger(this.getClass)
