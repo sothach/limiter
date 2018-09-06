@@ -1,4 +1,4 @@
-name := "betest"
+name := "limiter"
 
 version := "2018.09"
 
@@ -18,3 +18,5 @@ libraryDependencies ++= Seq(
 routesImport += "conversions.Binders._"
 
 coverageExcludedPackages := "<empty>;Reverse.*;router.*;controllers.javascript;play.api.*;views.html.*"
+
+herokuAppName in Compile := "limiter-be"
