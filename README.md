@@ -1,4 +1,7 @@
-# BETest
+# Limiter
+_Data file format service_
+
+Service to convert specific CSV and fixed-format files into HTML
 
 ### Status
 [![Build Status](https://travis-ci.org/sothach/stratum.png)](https://travis-ci.org/sothach/limiter)
