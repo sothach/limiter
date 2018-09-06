@@ -75,6 +75,9 @@ formats {
 }
 ```
 
+### Dependencies & Libraries
+This solution is based on Play! framework 2.6.x, and uses no libraries or frameworks not shipped as part of that environment
+
 ## What would I have done differently, given more time?
 * Make the service a Play module, to allow it to be incorporated and configured for other applications
 * Use an approach such as the IBM [Copybook](https://www.ibm.com/support/knowledgecenter/en/SSLVY3_10.0.0/com.ibm.mdmhs.fstrk.gd.doc/r_Sample_Copybook_Structure.html)
@@ -84,7 +87,20 @@ format, if more flexibility is needed to define alternate fixed-format records
 * Address more edge-cases in the tests
 * Pipeline this repo into a CI/CD environment (e.g., Travis-CI, Heroku, TeamCity)
 
-## Running locally
+## Running the system
+### Prerequisites 
+The target language is Scala version 2.12, and uses the build tool sbt 1.2.1.
+Clone this repository in a fresh directory:
+```git
+% git clone git@github.com:MarktplaatsShowAndTell/BETestRoyPhilips.git
+```
+In that directory, compile the example with the following command:
+```shell
+% sbt clean compile
+[info] Done compiling.
+[success] Total time: 6 s, completed 6-Sep-2018 22:38:12
+```
+
 Run the server on the local system, available at [http://localhost:9000](http://localhost:9000)
 ```shell
 % sbt run
