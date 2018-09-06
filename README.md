@@ -1,5 +1,10 @@
 # BETest
 
+### Status
+[![Build Status](https://travis-ci.org/sothach/stratum.png)](https://travis-ci.org/sothach/limiter)
+[![Coverage Status](https://coveralls.io/repos/github/sothach/limiter/badge.svg?branch=master)](https://coveralls.io/github/sothach/limiter?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a688282e09a04ddeb6d0b29f2c8b82e1)](https://www.codacy.com/project/sothach/limiter/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sothach/stratum&amp;utm_campaign=Badge_Grade_Dashboard)
+
 ## Instructions
 
     In this repo, you'll find two files, Workbook2.csv and Workbook2.prn. 
