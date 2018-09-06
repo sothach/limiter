@@ -47,9 +47,9 @@ In future evolutions, streams also simplifies managing the concurrency aspect of
 number of parallel work-streams to be specified and enforced, and back-pressure to be applied to sources.
 
 A `dataSource` is made available to the controller's body parser, to render incoming data (CSV or fixed-format) into
-a canonical key/value map, to allow down-stream processing to remain ingorant of the original format.  It does this
+a canonical key/value map, to allow down-stream processing to remain ignorant of the original format.  It does this
 by splitting input lines with a regular-expression that delimits by commas (CSV), or a recursive 'slicer' function,
-that divides the line baxed on the configured column size (fixed-format).
+that divides the line based on the configured column size (fixed-format).
 #### Domain Model
 Although domain information for this project was trivial, a couple of domain classes were defined, as a logical
 place to enforce domain rules.  `CreditLimit` is the prime domain concept, representing the line items in the 
@@ -61,7 +61,7 @@ sufficient, rather than a more flexible, OAuth style solution
 * In production, should be made available over HTTPS for privacy / integrity of communications.  HTTP was 
 considered adequate fot the proof-of-concept nature of the mission
 #### Performance
-The sample data is small, but it is worth considering the implications of loading larger datasets, 
+The sample data set is small, but it is worth considering the implications of loading larger datasets, 
 so a streaming approach to uploading the limits files was taken, limiting the memory footprint of the actions
 #### Configuration
 A limited configuration was provided, specifying the size of the columns of the fixed-file format, but not the 
@@ -82,9 +82,12 @@ This solution is based on Play! framework 2.6.x, and uses no libraries or framew
 * Make the service a Play module, to allow it to be incorporated and configured for other applications
 * Use an approach such as the IBM [Copybook](https://www.ibm.com/support/knowledgecenter/en/SSLVY3_10.0.0/com.ibm.mdmhs.fstrk.gd.doc/r_Sample_Copybook_Structure.html)
 format, if more flexibility is needed to define alternate fixed-format records
+* Make more aspects of the format processing configurable (e.g., header names, optional extra data items)
 * Provide an event-log to permanently store data uploaded: could be valuable as big data in the future, for analytics, etc.
 * Internationalise the messages / headings
 * Address more edge-cases in the tests
+* Provide better error reporting
+* Other output formats (e.g., Json) based on request 'Accepts' header
 * Pipeline this repo into a CI/CD environment (e.g., Travis-CI, Heroku, TeamCity)
 
 ## Running the system
