@@ -32,7 +32,7 @@ class LimitsService @Inject()(implicit system: ActorSystem,
   implicit val timeout = Timeout(1, TimeUnit.SECONDS)
 
   val fixedColumnsWidths = configuration.get[Seq[Int]]("formats.fixed.columnsWidths")
-
+  val fixedRowSize = fixedColumnsWidths.sum
   val headings = configuration.get[Seq[String]]("formats.headings").toList
 
   def dataSource(charset: String, contentType: String) = {
@@ -41,14 +41,11 @@ class LimitsService @Inject()(implicit system: ActorSystem,
         val csvRegex = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)"
         s.split(csvRegex).toSeq
       case _ =>
-        fixedColumnsWidths.foldLeft((s,Seq[String]())) { case ((row,acc), size) =>
-          val column = if(row.length > size) {
-            row.take(size)
-          } else {
-            row
-          }
-          (row.drop(size), acc :+ column)
-        }._2
+        require(s.length == fixedRowSize, s"row must be of length $fixedRowSize")
+        val result = fixedColumnsWidths.foldLeft((s,Seq[String]())) { case ((row,acc), size) =>
+          (row.drop(size), acc :+ row.take(size))
+        }
+        result._2
     }
 
     val rowSplitter = Flow[ByteString]
