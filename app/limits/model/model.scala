@@ -23,10 +23,10 @@ package object model {
   }
 
   implicit class MapClean(values: Map[String,String]) {
-    def normalized = values.map { item =>
-      val key = item._1.trim.toLowerCase
-      val value = item._2.trim.replaceAll("^\"|\"$", "")
-      key -> value
+    def normalized = values.map { case (key, value) =>
+      val nkey = key.trim.toLowerCase
+      val nval = value.trim.replaceAll("^\"|\"$", "")
+      nkey -> nval
     }
   }
 
