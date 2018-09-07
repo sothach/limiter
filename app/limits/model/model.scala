@@ -22,13 +22,21 @@ package object model {
     }
   }
 
+  implicit class MapClean(values: Map[String,String]) {
+    def normalized = values.map { item =>
+      val key = item._1.trim.toLowerCase
+      val value = item._2.trim.replaceAll("^\"|\"$", "")
+      key -> value
+    }
+  }
+
   case class CreditLimit(name: String, address: String, postcode: String, phone: PhoneNumber, limit: BigDecimal, dateOfBirth: LocalDate)
   object CreditLimit {
     val columns = Seq("name","address","postcode","phone","credit limit","birthday")
 
     def fromMap(values: Map[String,String]): Option[CreditLimit] = {
       require(values.size == columns.size, s"${columns.size} columns required")
-      val normal = values.map(item => item._1.trim.toLowerCase -> item._2.trim.replaceAll("^\"|\"$", ""))
+      val normal = values.normalized
       require(columns.forall (normal.keys.toList.contains), s"map must contain values for $columns")
       (PhoneNumber.parse(normal("phone")), dateParser(normal("birthday"))) match {
         case (Some(phone),Some(dob)) =>

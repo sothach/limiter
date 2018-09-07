@@ -43,7 +43,7 @@ class LimitsService @Inject()(implicit system: ActorSystem,
       case _ =>
         @tailrec
         def slicer(s: String, size: Seq[Int], acc: Seq[String] = Seq.empty): Seq[String] = {
-          if(s.length > size.head) {
+          if(size.headOption.exists(s.length > _)) {
             slicer(s.drop(size.head), size.drop(1), acc :+ s.take(size.head))
           } else {
             acc :+ s
