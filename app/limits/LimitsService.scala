@@ -44,8 +44,8 @@ class LimitsService @Inject()(implicit system: ActorSystem,
         require(s.length == fixedRowSize, s"row must be of length $fixedRowSize")
         val result = fixedColumnsWidths.foldLeft((s,Seq[String]())) { case ((row,acc), size) =>
           (row.drop(size), acc :+ row.take(size))
-        }
-        result._2
+        }._2
+        result
     }
 
     val rowSplitter = Flow[ByteString]
