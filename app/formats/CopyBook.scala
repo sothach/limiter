@@ -1,0 +1,24 @@
+package formats
+
+import scala.io.Source
+
+/*
+01 TCRMCONTRACTBOBJ.
+   05  OBJECT-NAME      PIC X(40).
+   05  CONTRACTID PIC 9(18).
+   05  CURRENCYTYPE     PIC X(2).
+   05  CURRENCYVALUE    PIC X(4).
+   05  TCRMCCBOBJ-COUNT PIC 99.
+   05  C-TCRMANKEYBOBJ-COUNT PIC 99.
+   05  TCRMCCBOBJ-OFFSET PIC 9(8) OCCURS 0 TO 99 TIMES
+             DEPENDING ON TCRMCCBOBJ-COUNT.
+   05  C-TCRMANKEYBOBJ-OFFSET PIC 9(8) OCCURS 0 TO 99
+             TIMES DEPENDING ON C-TCRMANKEYBOBJ-COUNT.
+ */
+class CopyBook {
+
+  def parse(filename: String) = {
+
+  }
+
+}

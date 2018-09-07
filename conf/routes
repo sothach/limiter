@@ -1,3 +1,7 @@
 
-GET    /                controllers.ApiController.index
-POST   /api/limits      controllers.ApiController.limits(apiKey: common.model.ApiKey)
+GET         /index.html          controllers.ApiController.index
+POST        /api/limits          controllers.ApiController.limits(apiKey: common.model.ApiKey)
+GET         /api/limits          controllers.ApiController.limits(apiKey: common.model.ApiKey)
+
+->          /webjars             webjars.Routes
+GET         /assets/*file        controllers.Assets.at(path="/public", file)

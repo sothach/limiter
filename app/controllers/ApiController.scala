@@ -20,7 +20,7 @@ class ApiController @Inject()(limitsService: LimitsService,
   logger.info("ApiController started")
 
   def index = Action.async {
-    Future.successful(Ok)
+    Future.successful(Ok(views.html.index("Welcome!")))
   }
 
   def limits(apiKey: ApiKey) = Action.async(fromFile) { request =>
@@ -29,7 +29,9 @@ class ApiController @Inject()(limitsService: LimitsService,
         limitsService.renderFromSource(request.body) map {
           case response if response.exists(_.isRight) =>
             val limits = response.filter(_.isRight).map(_.right.get)
-            Ok(views.html.results(limitsService.headings,limits))
+
+            //Ok(views.html.results(limitsService.headings,limits))
+            Ok
           case response: Seq[Either[String, _]] if response.exists(_.isLeft) =>
             val errors = response.filter(_.isLeft).map(_.left.get).mkString(";")
             logger.debug(s"Upload errors: $errors")

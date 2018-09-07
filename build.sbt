@@ -9,6 +9,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 libraryDependencies ++= Seq(
   ws, guice,
+  "org.webjars" %% "webjars-play" % "2.6.3",
+  "org.webjars" % "bootstrap" % "3.1.1-2",
 
   "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test,
   "org.mockito" % "mockito-all" % "2.0.2-beta" % Test,
