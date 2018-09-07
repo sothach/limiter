@@ -57,9 +57,7 @@ class LimitsService @Inject()(implicit system: ActorSystem,
       .map(_.decodeString(charset).trim)
       .map(splitter)
 
-    Accumulator.source[ByteString]
-      .map(_.via(rowSplitter))
-      .map(Right.apply)
+    Accumulator.source[ByteString].map(_.via(rowSplitter)).map(Right.apply)
   }
 
   val filter = Flow[Seq[String]]
