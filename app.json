@@ -2,7 +2,7 @@
   "name": "limiter",
   "description": "limits transformation service",
   "repository": "https://github.com/sothach/limiter",
-  "keywords": ["scala", "play"]
+  "keywords": ["scala", "play"],
   "scripts": {
   },
   "env": {
