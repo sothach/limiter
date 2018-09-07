@@ -41,15 +41,14 @@ class LimitsService @Inject()(implicit system: ActorSystem,
         val csvRegex = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)"
         s.split(csvRegex).toSeq
       case _ =>
-        @tailrec
-        def slicer(s: String, size: Seq[Int], acc: Seq[String] = Seq.empty): Seq[String] = {
-          if(s.length > size.head) {
-            slicer(s.drop(size.head), size.drop(1), acc :+ s.take(size.head))
+        fixedColumnsWidths.foldLeft((s,Seq[String]())) { case ((row,acc), size) =>
+          val column = if(row.length > size) {
+            row.take(size)
           } else {
-            acc :+ s
+            row
           }
-        }
-        slicer(s,fixedColumnsWidths)
+          (row.drop(size), acc :+ column)
+        }._2
     }
 
     val rowSplitter = Flow[ByteString]
