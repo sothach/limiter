@@ -95,7 +95,6 @@ format, if more flexibility is needed to define alternate fixed-format records
 * Address more edge-cases in the tests
 * Provide better error reporting
 * Other output formats (e.g., Json) based on request 'Accepts' header
-* Pipeline this repo into a CI/CD environment (e.g., Travis-CI, Heroku, TeamCity)
 
 ## Running the system
 ### Prerequisites 
