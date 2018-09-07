@@ -22,25 +22,30 @@ class RouteSpec extends PlaySpec with ScalaFutures with GuiceOneAppPerSuite {
     .loadConfig(Configuration(ConfigFactory.load("application.conf")))
     .build()
 
-  "GET /" should {"invoke the index" in {
-      val request = FakeRequest("GET", "/")
+  "GET /index.html" should {
+    "invoke the index" in {
+      val request = FakeRequest("GET", "/index.html")
         .withHeaders(FakeHeaders(Map("Host" -> "localhost").toSeq))
 
-      route(app, request).map(status) mustBe Some(OK)
+      route(app, request) foreach { future =>
+        val response = Await.result(future, 10 seconds)
+        response.header.status mustBe OK
+        val result = Await.result(response.body.consumeData, 2 seconds)
+        val html = scala.xml.XML.loadString(result.utf8String)
+        (html \\ "h1").map(_.text) mustBe List("Welcome!")
+      }
     }
   }
 
   "valid CSV limits posted to the /api/limits endpoint" should {
     "be rendered as HTML" in {
-      val file = Seq(
-        "Name,Address,Postcode,Phone,Credit Limit,Birthday",
+      val file = Seq("Name,Address,Postcode,Phone,Credit Limit,Birthday",
         """"Johnson, John",Voorstraat 32,3122gg,020 3849381,10000,01/01/1987""")
       val request = FakeRequest("POST", s"/api/limits?apiKey=$apiKey")
         .withHeaders(FakeHeaders(Map(
           "Host" -> "localhost",
           "Content-Type" -> "text/csv").toSeq))
         .withBody(file.mkString("\n"))
-      route(app, request).map(status) mustBe Some(OK)
 
       route(app, request) foreach { future =>
         val response = Await.result(future, 10 seconds)
@@ -108,6 +113,36 @@ class RouteSpec extends PlaySpec with ScalaFutures with GuiceOneAppPerSuite {
         response.header.status mustBe BAD_REQUEST
         val result = Await.result(response.body.consumeData, 2 seconds)
         result.utf8String mustBe "Unable to build CreditLimit from values"
+      }
+    }
+  }
+
+
+  "An empty body posted to the /api/limits endpoint" should {
+    "respond with a Bad request (400) error" in {
+      val request = FakeRequest("POST", s"/api/limits?apiKey=$apiKey")
+        .withHeaders(FakeHeaders(Map(
+          "Host" -> "localhost",
+          "Content-Type" -> "text/plain").toSeq))
+        .withBody("")
+      route(app, request) foreach { future =>
+        val response = Await.result(future, 10 seconds)
+        response.header.status mustBe BAD_REQUEST
+      }
+    }
+  }
+
+  "A body only containing header posted to the /api/limits endpoint" should {
+    "respond with a Bad request (400) error" in {
+      val file = Seq("Name            Address               Postcode Phone         Credit Limit Birthday")
+      val request = FakeRequest("POST", s"/api/limits?apiKey=$apiKey")
+        .withHeaders(FakeHeaders(Map(
+          "Host" -> "localhost",
+          "Content-Type" -> "text/plain").toSeq))
+        .withBody(file.mkString("\n"))
+      route(app, request) foreach { future =>
+        val response = Await.result(future, 10 seconds)
+        response.header.status mustBe BAD_REQUEST
       }
     }
   }

@@ -45,9 +45,17 @@ class ModelSpec extends FlatSpec with Matchers {
       "Name" -> "Johnson, John", "Address" -> "Voorstraat 32", "Postcode " -> "3122gg", "Phone" -> " 020 3849381")
     the [IllegalArgumentException] thrownBy {
       CreditLimit.fromMap(values)
-    } should have message "requirement failed: map must contain values for List(name, address, postcode, phone, credit limit, birthday)"
+    } should have message "requirement failed: 6 columns required"
   }
 
+  "An limits value map with incorrect columns" should "trigger a precondition violation" in {
+    val values = Map(
+      "Naam" -> "Johnson, John", "Adres" -> "Voorstraat 32", "Postcode " -> "3122gg",
+      "Telefon" -> " 020 3849381", "Kredietlimiet" -> "1000000", "Verjaardag" -> "01/01/1987")
+    the [IllegalArgumentException] thrownBy {
+      CreditLimit.fromMap(values)
+    } should have message "requirement failed: map must contain values for List(name, address, postcode, phone, credit limit, birthday)"
+  }
 
   "An limits value map with invalid values" should "fail" in {
     val values = Map(

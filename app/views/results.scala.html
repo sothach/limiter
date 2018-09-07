@@ -1,10 +1,8 @@
 @import limits.model.CreditLimit
 
-@(headings: List[String], limits: Seq[CreditLimit], webJarsUtil: org.webjars.play.WebJarsUtil)
+@(headings: List[String], limits: Seq[CreditLimit])
 
 <html>
-    @webJarsUtil.locate("bootstrap.min.css").css()
-    @webJarsUtil.locate("bootstrap.min.js").script()
     <h1>Credit Limits</h1>
     <table id="limits">
         <tr>

@@ -10,7 +10,7 @@ import scala.concurrent.Future
 
 @Singleton
 class ApiController @Inject()(limitsService: LimitsService,
-                              components: ControllerComponents) 
+                              components: ControllerComponents)
                                 extends AbstractController(components) {
 
   implicit val ec = components.executionContext
@@ -29,9 +29,7 @@ class ApiController @Inject()(limitsService: LimitsService,
         limitsService.renderFromSource(request.body) map {
           case response if response.exists(_.isRight) =>
             val limits = response.filter(_.isRight).map(_.right.get)
-
-            //Ok(views.html.results(limitsService.headings,limits))
-            Ok
+            Ok(views.html.results(limitsService.headings,limits))
           case response: Seq[Either[String, _]] if response.exists(_.isLeft) =>
             val errors = response.filter(_.isLeft).map(_.left.get).mkString(";")
             logger.debug(s"Upload errors: $errors")

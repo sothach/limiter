@@ -62,12 +62,15 @@ class LimitsService @Inject()(implicit system: ActorSystem,
       .map(Right.apply)
   }
 
+  val filter = Flow[Seq[String]]
+    .collect { case element if element.nonEmpty => element}
+
   val mapify: Flow[Seq[String], Map[String, String], NotUsed] =
-    Flow[Seq[String]].prefixAndTail(1).flatMapConcat { case (headers, rows) =>
-      val header = headers.head.map(_.toLowerCase)
-      rows.map(header.zip(_).toMap)
-    }.collect { case element if !element.values.exists(_.trim.isEmpty) =>
-      element
+    Flow[Seq[String]].prefixAndTail(1).flatMapConcat {
+      case (headers, rows) =>
+        val header = headers.headOption
+          .getOrElse(Seq.empty).map(_.toLowerCase)
+        rows.map(header.zip(_).toMap)
     }
 
   val validate = Flow[Map[String, String]] map { values =>
@@ -75,6 +78,6 @@ class LimitsService @Inject()(implicit system: ActorSystem,
   }
 
   def renderFromSource(source: Source[Seq[String],_]) =
-    source.async via mapify via validate runWith Sink.seq
+    source.async via filter via mapify via validate runWith Sink.seq
 
 }
