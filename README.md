@@ -86,7 +86,7 @@ This solution is based on Play! framework 2.6.x, and uses no libraries or framew
 * Make the service a Play module, to allow it to be incorporated and configured for other applications
 * Use an approach such as the IBM [Copybook](https://www.ibm.com/support/knowledgecenter/en/SSLVY3_10.0.0/com.ibm.mdmhs.fstrk.gd.doc/r_Sample_Copybook_Structure.html)
 format, if more flexibility is needed to define alternate fixed-format records
-* Incrementally return records to reduce memory usage
+* Incrementally return records to reduce memory usage (use HttpEntity.Streamed(source, ...) where the `source` streams back the response)
 * Make more aspects of the format processing configurable (e.g., header names, optional extra data items)
 * Provide an event-log to permanently store data uploaded: could be valuable as big data in the future, for analytics, etc.
 * Internationalise the messages / headings
