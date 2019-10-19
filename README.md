@@ -6,8 +6,7 @@ Service to convert specific CSV and fixed-format files into HTML
 ### Deployment pipeline
 [![Build Status](https://travis-ci.org/sothach/stratum.png)](https://travis-ci.org/sothach/limiter) >>
 [![Coverage Status](https://coveralls.io/repos/github/sothach/limiter/badge.svg?branch=master)](https://coveralls.io/github/sothach/limiter?branch=master) >>
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a688282e09a04ddeb6d0b29f2c8b82e1)](https://www.codacy.com/project/sothach/limiter/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sothach/stratum&amp;utm_campaign=Badge_Grade_Dashboard) >>
-![Heroku](https://heroku-badge.herokuapp.com/?app=limiter-be&root=index.html)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a688282e09a04ddeb6d0b29f2c8b82e1)](https://www.codacy.com/project/sothach/limiter/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sothach/stratum&amp;utm_campaign=Badge_Grade_Dashboard)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
